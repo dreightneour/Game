@@ -4,7 +4,7 @@ public class NetworkManager {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.err.println("");
+		System.err.println("500");
 	}
 
 }
