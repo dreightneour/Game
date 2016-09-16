@@ -2,22 +2,21 @@ package main;
 import javax.swing.*;
 
 public class Map extends JFrame{
+
 	public Map()
 	{
-
-        JFrame frame = new JFrame("GAME");
+		JFrame frame = new JFrame("GAME");
+        //Create and set up the window
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        System.out.println("0");
+
         //Add the ubiquitous "Hello World" label.
-        JLabel label = new JLabel("Hello World");
+        JLabel label = new JLabel("FUCK");
         frame.getContentPane().add(label);
 
         //Display the window.
-        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        //frame.setUndecorated(true);
-        //frame.setVisible(true);
-        frame.pack();
+        frame.setSize(500, 500);
         frame.setVisible(true);
+
         
 
 	}
