@@ -3,6 +3,8 @@ import javax.swing.*;
 
 public class Map extends JFrame{
 
+	private static final long serialVersionUID = 1L;
+
 	public Map()
 	{
 		JFrame frame = new JFrame("GAME");
