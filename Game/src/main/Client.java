@@ -14,19 +14,31 @@ import javax.swing.JPanel;
 
 public class Client implements ActionListener{
 JFrame frame = new JFrame("GAME");
-JButton map = new JButton("MAP");
+
 	public Client()
 	{
 		
-	    //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    System.out.println("0");
 	    JPanel panel = new JPanel();
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	    //Add the ubiquitous "Hello World" label.
-	    
+	    JButton map = new JButton("Map");
 	    map.setSize(75, 50);
 	    map.addActionListener(this);
 	    panel.add(map);
+	    
+	    JButton connect = new JButton("Connect");
+	    connect.setSize(75, 50);
+	    connect.addActionListener(this);
+	    panel.add(connect);
+	    
+	    JButton host = new JButton("Host");
+	    host.setSize(75, 50);
+	    host.addActionListener(this);
+	    panel.add(host);
+	    
+	    
 	    
 	    
 	    
@@ -44,9 +56,16 @@ JButton map = new JButton("MAP");
 	}
 	public void actionPerformed(ActionEvent e) 
 	{ 
+		System.out.println(e.getActionCommand());
+		
 		//frame.revalidate();
-		Map mapS = new Map();
-		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		if(e.getActionCommand() == "Map")
+		{
+			Map mapS = new Map();
+			frame.dispose();
+			//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		}
+		
 
 	}
 }
