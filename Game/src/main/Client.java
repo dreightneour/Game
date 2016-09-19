@@ -34,11 +34,7 @@ JFrame frame = new JFrame("GAME");
 	    host.setSize(75, 50);
 	    host.addActionListener(this);
 	    panel.add(host);
-	    
-	    
-	    
-	    
-	    
+
 	    JLabel label = new JLabel("Hello World");
 	    panel.add(label);
 	    frame.getContentPane().add(panel);
