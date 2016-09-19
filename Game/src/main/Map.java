@@ -4,11 +4,12 @@ import java.awt.Graphics;
 import javax.swing.*;
 
 public class Map extends JPanel{
- 
+ private int size;
 	
 
 	public Map()
 	{
+		size = 7;
 		JFrame frame = new JFrame("GAME");
         //Create and set up the window
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,23 +33,31 @@ public class Map extends JPanel{
 
 	
    public void paint(Graphics g){
-		/*g.setColor(Color.CYAN);
-		g.fillOval(40, 40, 60, 60); //FOR CIRCLE
-		g.fillRect(80, 30, 200, 200); // FOR SQUARE
-		g.fillRect(200, 100, 100, 200); // FOR RECT
-		
-		g.setColor(Color.BLACK);
-		
-		g.drawOval(40, 40, 60, 60); //FOR CIRCLE
-		g.drawRect(80, 30, 200, 200); // FOR SQUARE
-		g.drawRect(200, 100, 100, 200); // FOR RECT
-		*/
-	   for(int i = 0; i < 10; i++)
+	   g.setColor(Color.BLUE);
+	   for(int i = 0; i < size; i++)
 	   {
-		  for(int j = 0; j < i % 5; j++)
-		  {
-			  
-		  }
+		   if(i < size / 2)
+		   {
+			   for(int j = 0; j <= i % (size/2); j++)
+			   {
+				   g.drawRect(j * 50 - (i * 25) + 250, i * 50, 50, 50);
+			   }
+		   }
+		   else if(i == size / 2)
+		   {
+			   for(int j = 0; j < (size + 1) / 2; j++)
+			   {
+				   g.drawRect(j * 50 - (i * 25) + 250, i * 50, 50, 50);
+			   }
+		   }
+		   else
+		   {
+			   for(int j = 0; j < (size - i) % size; j++)
+			   {
+				   g.drawRect(j * 50 - ((size - (i + 1)) * 25) + 250, i * 50, 50, 50);
+			   }
+		   }
+
 	   }
    }
 }
