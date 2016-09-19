@@ -13,7 +13,7 @@ public class NetworkManager {
 	public NetworkManager()
 	{
 	    try {
-			serverSocket = new ServerSocket(1);
+			serverSocket = new ServerSocket(8080);
 			serverSocket.setSoTimeout(10000);
 			run();
 		} catch (IOException e) {
@@ -26,14 +26,18 @@ public class NetworkManager {
 	public void run() {
 	      while(true) {
 	         try {
+	        	 //Wait for socket
 	            System.out.println("Waiting for client on port " + 
 	               serverSocket.getLocalPort() + "...");
 	            Socket server = serverSocket.accept();
 	            
+	            //Connect and try to recieve info
 	            System.out.println("Just connected to " + server.getRemoteSocketAddress());
 	            DataInputStream in = new DataInputStream(server.getInputStream());
 	            
 	            System.out.println(in.readUTF());
+	            
+	            //Set up out info and send message, then close connection
 	            DataOutputStream out = new DataOutputStream(server.getOutputStream());
 	            out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress()
 	               + "\nGoodbye!");
