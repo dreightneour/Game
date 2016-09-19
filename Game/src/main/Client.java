@@ -58,7 +58,18 @@ JFrame frame = new JFrame("GAME");
 			frame.dispose();
 			//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		}
-		
+		if(e.getActionCommand() == "Connect")
+		{
+			Connect connect = new Connect();
+			frame.dispose();
+			//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		}
+		if(e.getActionCommand() == "Host")
+		{
+			NetworkManager net = new NetworkManager();
+			frame.dispose();
+			//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		}
 
 	}
 }
