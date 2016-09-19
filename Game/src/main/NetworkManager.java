@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-public class NetworkManager {
+public class NetworkManager implements Runnable {
 
 	private ServerSocket serverSocket;
 	public NetworkManager()
@@ -15,14 +15,15 @@ public class NetworkManager {
 	    try {
 			serverSocket = new ServerSocket(8080);
 			serverSocket.setSoTimeout(10000);
-			run();
+			Thread runner = new Thread(this);
+			runner.start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	      
 	}
-		
+	
 	public void run() {
 	      while(true) {
 	         try {
@@ -31,7 +32,7 @@ public class NetworkManager {
 	               serverSocket.getLocalPort() + "...");
 	            Socket server = serverSocket.accept();
 	            
-	            //Connect and try to recieve info
+	            //Connect and try to receive info
 	            System.out.println("Just connected to " + server.getRemoteSocketAddress());
 	            DataInputStream in = new DataInputStream(server.getInputStream());
 	            
@@ -52,4 +53,6 @@ public class NetworkManager {
 	         }
 	      }
 	   }
+		
+	
 }
