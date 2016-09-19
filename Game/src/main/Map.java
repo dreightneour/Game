@@ -34,27 +34,54 @@ public class Map extends JPanel{
 	
    public void paint(Graphics g){
 	   g.setColor(Color.BLUE);
+	    int xpoints[] = {0, -50, 0, 50};
+	    int ypoints[] = {0, 50, 100, 50};
+	    int npoints = 4;
+	    int xpointsC[] = new int[npoints];
+	    int ypointsC[]= new int[npoints];
+	    
+	    
+	   // 
+
 	   for(int i = 0; i < size; i++)
 	   {
 		   if(i < size / 2)
 		   {
 			   for(int j = 0; j <= i % (size/2); j++)
 			   {
-				   g.drawRect(j * 50 - (i * 25) + 250, i * 50, 50, 50);
+				   //g.drawRect(j * 50 - (i * 25) + 250, i * 50, 50, 50);
+				   for(int k = 0; k < npoints; k++)
+				   {
+					   xpointsC[k] = xpoints[k] + (j * 100) - (i * 50) + 250;
+					   ypointsC[k] = ypoints[k] + i * 50;
+				   }
+				   g.drawPolygon(xpointsC, ypointsC, npoints);
 			   }
 		   }
 		   else if(i == size / 2)
 		   {
 			   for(int j = 0; j < (size + 1) / 2; j++)
 			   {
-				   g.drawRect(j * 50 - (i * 25) + 250, i * 50, 50, 50);
+				   //g.drawRect(j * 50 - (i * 25) + 250, i * 50, 50, 50);
+				   for(int k = 0; k < npoints; k++)
+				   {
+					   xpointsC[k] = xpoints[k] + (j * 100) - (i * 50) + 250;
+					   ypointsC[k] = ypoints[k] + i * 50;
+				   }
+				   g.drawPolygon(xpointsC, ypointsC, npoints);
 			   }
 		   }
 		   else
 		   {
 			   for(int j = 0; j < (size - i) % size; j++)
 			   {
-				   g.drawRect(j * 50 - ((size - (i + 1)) * 25) + 250, i * 50, 50, 50);
+				   for(int k = 0; k < npoints; k++)
+				   {
+					   xpointsC[k] = xpoints[k] + (j * 100) - ((size - (i + 1)) * 50) + 250;
+					   ypointsC[k] = ypoints[k] + i * 50;
+				   }
+				   g.drawPolygon(xpointsC, ypointsC, npoints);
+				   //g.drawRect(j * 50 - ((size - (i + 1)) * 25) + 250, i * 50, 50, 50);
 			   }
 		   }
 
