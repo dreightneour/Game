@@ -13,7 +13,7 @@ public class NetworkManager {
 	public NetworkManager()
 	{
 	    try {
-			serverSocket = new ServerSocket(6066);
+			serverSocket = new ServerSocket(1);
 			serverSocket.setSoTimeout(10000);
 			run();
 		} catch (IOException e) {

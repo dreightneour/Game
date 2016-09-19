@@ -1,6 +1,9 @@
 package main;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.*;
 
 public class Map extends JPanel{
@@ -40,16 +43,16 @@ public class Map extends JPanel{
 	    int xpointsC[] = new int[npoints];
 	    int ypointsC[]= new int[npoints];
 	    
-	    
-	   // 
-
+	    Graphics2D g2 = (Graphics2D) g;
+	    g2.setStroke(new BasicStroke(3));
 	   for(int i = 0; i < size; i++)
 	   {
 		   if(i < size / 2)
 		   {
 			   for(int j = 0; j <= i % (size/2); j++)
 			   {
-				   //g.drawRect(j * 50 - (i * 25) + 250, i * 50, 50, 50);
+				   //g2d.drawRect(j * 50 - (i * 25) + 250, i * 50, 50, 50);
+				   
 				   for(int k = 0; k < npoints; k++)
 				   {
 					   xpointsC[k] = xpoints[k] + (j * 100) - (i * 50) + 250;

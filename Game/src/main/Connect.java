@@ -9,7 +9,7 @@ public class Connect {
 	{
 
 		String serverName = "localhost";
-		int port = 6066;
+		int port = 1;
 		try {
 		   System.out.println("Connecting to " + serverName + " on port " + port);
 		   Socket client = new Socket(serverName, port);
