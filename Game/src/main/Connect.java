@@ -43,16 +43,25 @@ public class Connect {
 	
 	private void writeToServer(Socket client) throws IOException
 	{
-		Scanner inS= new Scanner(System.in);
+		//Scanner inS= new Scanner(System.in);
 		OutputStream outToServer = client.getOutputStream();
-		
+		String[] hello = new String[1000];
+		for(int i = 0; i < 999; i++)
+		{
+			hello[i] = "hello";
+			
+		}
+		hello[999] = "quit";
+		int count = 0;
 		//
 		while(true)
 		{
+			
 			DataOutputStream out = new DataOutputStream(outToServer);
-			String send = inS.nextLine();
+			String send = hello[count];//inS.nextLine();
 			out.writeUTF(send);
 			out.flush();
+			count++;
 			if(Objects.equals(send, "quit"))//send.equals("quit"))
 			{
 				break;
