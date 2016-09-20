@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class NetworkManagerThreadReceive extends Thread {
 	private Socket socket = null;
+	private String message;
     public NetworkManagerThreadReceive(Socket socket) {
         super();
         this.socket = socket;
@@ -37,7 +38,7 @@ public class NetworkManagerThreadReceive extends Thread {
 		while(true)
 		{
 			String hold = in.readUTF();
-			
+			message += hold;
 	        System.out.println(hold);
 	        if(Objects.equals(hold, "quit"))//hold == "quit")
 	        {
@@ -46,8 +47,8 @@ public class NetworkManagerThreadReceive extends Thread {
 		}
 	}
     
-    private void sendInfo(Socket server) throws IOException
+    public String getMessage()
     {
-    	
+    	return message;
     }
 }

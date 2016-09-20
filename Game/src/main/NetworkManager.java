@@ -6,14 +6,17 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class NetworkManager{// implements Runnable {
 
-	private static int MAX_PLAYERS = 8;
+	private static int MAX_PLAYERS = 2;
 	private ServerSocket serverSocket;
-	private Socket[] thread;
-	public NetworkManager()
+	private Socket[] sockets;
+	private int players;
+	private ArrayList<String> messages;
+	public NetworkManager() 
 	{
 		
 	    /*try {
@@ -23,7 +26,7 @@ public class NetworkManager{// implements Runnable {
 					serverSocket.getLocalPort() + "...");
 		    Socket server = serverSocket.accept();
 		    */
-		
+		messages = new ArrayList<String>();
 	    boolean listening = true;
 	    //thread = new  NetworkManagerThread[MAX_PLAYERS];
 	    int count = 0;
@@ -33,11 +36,17 @@ public class NetworkManager{// implements Runnable {
         	//serverSocket.setSoTimeout(10000);
         	System.out.println("Waiting for client on port " + 
 					serverSocket.getLocalPort() + "...");
-        	thread = new Socket[MAX_PLAYERS];
-            while (listening) {
-            	thread[count] = serverSocket.accept();
-                new NetworkManagerThreadReceive(thread[count]).start();
+        	sockets = new Socket[MAX_PLAYERS];
+            while (listening && count < MAX_PLAYERS) {
+            	sockets[count] = serverSocket.accept();
+                //new NetworkManagerThreadReceive(thread[count]).start();
                 count++;
+            }
+            players = count;
+            while(true)
+            {
+            	endTurn();
+            	break;
             }
         } catch(SocketTimeoutException s) {
             System.out.println("Socket timed out!");
@@ -51,52 +60,25 @@ public class NetworkManager{// implements Runnable {
 	      
 	}
 	
-	/*public void run() {
-	      while(true) {
-	         try {
-	        	 //Wait for socket
-	            /*System.out.println("Waiting for client on port " + 
-	               serverSocket.getLocalPort() + "...");
-	            Socket server = serverSocket.accept();
-	            
-	            
-	            //Connect and try to receive info
-	            System.out.println("Just connected to " + server.getRemoteSocketAddress());
-	            recieveInfo(server);
-	            //DataInputStream in = new DataInputStream(server.getInputStream());
-	            //System.out.println(in.readUTF());
-	            
-	            //Set up out info and send message, then close connection
-	            DataOutputStream out = new DataOutputStream(server.getOutputStream());
-	            out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress()
-	               + "\nGoodbye!");
-	            server.close();
-	            
-	         }catch(SocketTimeoutException s) {
-	            System.out.println("Socket timed out!");
-	            break;
-	         }catch(IOException e) {
-	            e.printStackTrace();
-	            break;
-	         }
-	      }
-	   }
-	
-	private void recieveInfo(Socket server) throws IOException
+	private void endTurn()
 	{
-		DataInputStream in = new DataInputStream(server.getInputStream());
-		while(true)
+		messages.clear();
+		NetworkManagerThreadReceive[] thread = new NetworkManagerThreadReceive[players];
+		for(int i = 0; i < players; i++)
 		{
-			
-	        
-			String hold = in.readUTF();
-			
-	        System.out.println(hold);
-	        if(Objects.equals(hold, "quit"))//hold == "quit")
-	        {
-	        	break;
-	        }
+			thread[i] = new NetworkManagerThreadReceive(sockets[i]);
+			thread[i].start();
 		}
+		for(int i = 0; i < players; i++)
+		{
+			try {
+				thread[i].join();
+				messages.add(thread[i].getMessage());
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
-	*/
 }

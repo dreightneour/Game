@@ -25,9 +25,10 @@ public class Connect {
 			writeToServer(client);
 			//write to server and make a receiving handler 
 			
+			receiveFromServer(client);
 			//out.writeUTF("Hello from " + client.getLocalSocketAddress());
-			InputStream inFromServer = client.getInputStream();
-			DataInputStream in = new DataInputStream(inFromServer);
+			//InputStream inFromServer = client.getInputStream();
+			//DataInputStream in = new DataInputStream(inFromServer);
 			 
 			//receive from the server and close
 			//System.out.println("Server says " + in.readUTF());
@@ -54,11 +55,12 @@ public class Connect {
 				break;
 			}
 		}
-		
-		
-		
-		//write to server and make a receiving handler 
-		
-		
+	}
+	
+	private void receiveFromServer(Socket client) throws IOException
+	{
+		InputStream inFromServer = client.getInputStream();
+		DataInputStream in = new DataInputStream(inFromServer);
+		String message = in.readUTF();
 	}
 }
