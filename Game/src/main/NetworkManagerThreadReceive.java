@@ -4,9 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.util.Objects;
 
-public class NetworkManagerThread extends Thread {
+public class NetworkManagerThreadReceive extends Thread {
 	private Socket socket = null;
-    public NetworkManagerThread(Socket socket) {
+    public NetworkManagerThreadReceive(Socket socket) {
         super();
         this.socket = socket;
     }
@@ -15,22 +15,23 @@ public class NetworkManagerThread extends Thread {
  
         try{ 
             //Connect and try to receive info
-            System.out.println("Just connected to " + socket.getRemoteSocketAddress());
+            //System.out.println("Just connected to " + socket.getRemoteSocketAddress());
             recieveInfo(socket);
             //DataInputStream in = new DataInputStream(server.getInputStream());
             //System.out.println(in.readUTF());
             
             //Set up out info and send message, then close connection
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            out.writeUTF("Thank you for connecting to " + socket.getLocalSocketAddress()
-               + "\nGoodbye!");
+            //sendInfo(socket);
+            //DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            //out.writeUTF("Thank you for connecting to " + socket.getLocalSocketAddress()
+            //   + "\nGoodbye!");
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    private void recieveInfo(Socket server) throws IOException
+    public void recieveInfo(Socket server) throws IOException
 	{
 		DataInputStream in = new DataInputStream(server.getInputStream());
 		while(true)
@@ -44,4 +45,9 @@ public class NetworkManagerThread extends Thread {
 	        }
 		}
 	}
+    
+    private void sendInfo(Socket server) throws IOException
+    {
+    	
+    }
 }

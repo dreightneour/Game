@@ -10,7 +10,9 @@ import java.util.Objects;
 
 public class NetworkManager{// implements Runnable {
 
+	private static int MAX_PLAYERS = 8;
 	private ServerSocket serverSocket;
+	private Socket[] thread;
 	public NetworkManager()
 	{
 		
@@ -23,14 +25,19 @@ public class NetworkManager{// implements Runnable {
 		    */
 		
 	    boolean listening = true;
-         
+	    //thread = new  NetworkManagerThread[MAX_PLAYERS];
+	    int count = 0;
         try { 
+        	 
         	this.serverSocket = new ServerSocket(32000);
-        	serverSocket.setSoTimeout(10000);
+        	//serverSocket.setSoTimeout(10000);
         	System.out.println("Waiting for client on port " + 
 					serverSocket.getLocalPort() + "...");
+        	thread = new Socket[MAX_PLAYERS];
             while (listening) {
-                new NetworkManagerThread(serverSocket.accept()).start();
+            	thread[count] = serverSocket.accept();
+                new NetworkManagerThreadReceive(thread[count]).start();
+                count++;
             }
         } catch(SocketTimeoutException s) {
             System.out.println("Socket timed out!");
