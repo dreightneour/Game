@@ -6,14 +6,17 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.Objects;
 
 public class NetworkManager implements Runnable {
 
+	private int connected;
 	private ServerSocket serverSocket;
 	public NetworkManager()
 	{
+		connected = 0;
 	    try {
-			serverSocket = new ServerSocket(8080);
+			serverSocket = new ServerSocket(32000);
 			serverSocket.setSoTimeout(10000);
 			Thread runner = new Thread(this);
 			runner.start();
@@ -31,12 +34,13 @@ public class NetworkManager implements Runnable {
 	            System.out.println("Waiting for client on port " + 
 	               serverSocket.getLocalPort() + "...");
 	            Socket server = serverSocket.accept();
+	            connected++;
 	            
 	            //Connect and try to receive info
 	            System.out.println("Just connected to " + server.getRemoteSocketAddress());
-	            DataInputStream in = new DataInputStream(server.getInputStream());
-	            
-	            System.out.println(in.readUTF());
+	            recieveInfo(server);
+	            //DataInputStream in = new DataInputStream(server.getInputStream());
+	            //System.out.println(in.readUTF());
 	            
 	            //Set up out info and send message, then close connection
 	            DataOutputStream out = new DataOutputStream(server.getOutputStream());
@@ -54,5 +58,20 @@ public class NetworkManager implements Runnable {
 	      }
 	   }
 		
-	
+	private void recieveInfo(Socket server) throws IOException
+	{
+		DataInputStream in = new DataInputStream(server.getInputStream());
+		while(true)
+		{
+			
+	        
+			String hold = in.readUTF();
+			
+	        System.out.println(hold);
+	        if(Objects.equals(hold, "quit"))//hold == "quit")
+	        {
+	        	break;
+	        }
+		}
+	}
 }
