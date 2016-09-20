@@ -11,7 +11,7 @@ public class Connect {
 	{
 
 		String serverName = "localhost";
-
+		//Scanner inS= new Scanner(System.in);
 		//int port = inS.nextInt();
 		int port = 32000;
 		try {
@@ -21,8 +21,6 @@ public class Connect {
 		   
 			//If connected, let person know and create the streams
 			System.out.println("Just connected to " + client.getRemoteSocketAddress());
-			//OutputStream outToServer = client.getOutputStream();
-			//DataOutputStream out = new DataOutputStream(outToServer);
 			
 			writeToServer(client);
 			//write to server and make a receiving handler 
@@ -43,25 +41,14 @@ public class Connect {
 	
 	private void writeToServer(Socket client) throws IOException
 	{
-		//Scanner inS= new Scanner(System.in);
+		Scanner inS= new Scanner(System.in);
 		OutputStream outToServer = client.getOutputStream();
-		String[] hello = new String[1000];
-		for(int i = 0; i < 999; i++)
-		{
-			hello[i] = "hello";
-			
-		}
-		hello[999] = "quit";
-		int count = 0;
-		//
+		DataOutputStream out = new DataOutputStream(outToServer);
 		while(true)
 		{
-			
-			DataOutputStream out = new DataOutputStream(outToServer);
-			String send = hello[count];//inS.nextLine();
+			String send = inS.nextLine();
 			out.writeUTF(send);
 			out.flush();
-			count++;
 			if(Objects.equals(send, "quit"))//send.equals("quit"))
 			{
 				break;

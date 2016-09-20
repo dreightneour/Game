@@ -8,33 +8,50 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.Objects;
 
-public class NetworkManager implements Runnable {
+public class NetworkManager{// implements Runnable {
 
-	private int connected;
 	private ServerSocket serverSocket;
 	public NetworkManager()
 	{
-		connected = 0;
-	    try {
-			serverSocket = new ServerSocket(32000);
+		
+	    /*try {
+			serverSocket = new ServerSocket(0);
 			serverSocket.setSoTimeout(10000);
-			Thread runner = new Thread(this);
-			runner.start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			System.out.println("Waiting for client on port " + 
+					serverSocket.getLocalPort() + "...");
+		    Socket server = serverSocket.accept();
+		    */
+		
+	    boolean listening = true;
+         
+        try { 
+        	this.serverSocket = new ServerSocket(32000);
+        	serverSocket.setSoTimeout(10000);
+        	System.out.println("Waiting for client on port " + 
+					serverSocket.getLocalPort() + "...");
+            while (listening) {
+                new NetworkManagerThread(serverSocket.accept()).start();
+            }
+        } catch(SocketTimeoutException s) {
+            System.out.println("Socket timed out!");
+         }catch (IOException e) {
+            System.err.println("Could not listen on port " + 32000);
+            System.exit(-1);
+        }
+			//Thread runner = new Thread(this);
+			//runner.start();
+	    
 	      
 	}
 	
-	public void run() {
+	/*public void run() {
 	      while(true) {
 	         try {
 	        	 //Wait for socket
-	            System.out.println("Waiting for client on port " + 
+	            /*System.out.println("Waiting for client on port " + 
 	               serverSocket.getLocalPort() + "...");
 	            Socket server = serverSocket.accept();
-	            connected++;
+	            
 	            
 	            //Connect and try to receive info
 	            System.out.println("Just connected to " + server.getRemoteSocketAddress());
@@ -57,7 +74,7 @@ public class NetworkManager implements Runnable {
 	         }
 	      }
 	   }
-		
+	
 	private void recieveInfo(Socket server) throws IOException
 	{
 		DataInputStream in = new DataInputStream(server.getInputStream());
@@ -74,4 +91,5 @@ public class NetworkManager implements Runnable {
 	        }
 		}
 	}
+	*/
 }
