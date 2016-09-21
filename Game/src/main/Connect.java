@@ -25,7 +25,8 @@ public class Connect {
 			writeToServer(client);
 			//write to server and make a receiving handler 
 			
-			//receiveFromServer(client);
+			receiveFromServer(client);
+			
 			//out.writeUTF("Hello from " + client.getLocalSocketAddress());
 			//InputStream inFromServer = client.getInputStream();
 			//DataInputStream in = new DataInputStream(inFromServer);
@@ -61,6 +62,6 @@ public class Connect {
 	{
 		InputStream inFromServer = client.getInputStream();
 		DataInputStream in = new DataInputStream(inFromServer);
-		String message = in.readUTF();
+		//String message = in.readUTF();
 	}
 }
