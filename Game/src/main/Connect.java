@@ -25,7 +25,7 @@ public class Connect {
 			writeToServer(client);
 			//write to server and make a receiving handler 
 			
-			receiveFromServer(client);
+			//receiveFromServer(client);
 			
 			//out.writeUTF("Hello from " + client.getLocalSocketAddress());
 			//InputStream inFromServer = client.getInputStream();
